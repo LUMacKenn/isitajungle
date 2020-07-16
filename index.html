@@ -1,0 +1,74 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Is it a jungle?</title>
+  <meta name="description" content="It might be a jungle.">
+  <meta name="author" content="Mac B">
+
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+  <div class="content">
+    <div class="img-container">
+      <img src="" alt="" id="image" width="" height=""/>
+    </div>
+    <p id="caption">
+    </p>
+  </div>
+
+
+  <script>
+    const jungleOdds = 0.1;
+    const maxImgDimension = 600;
+
+    function getJunglePicture() {
+      var randomVal = Math.floor(Math.random() * 11) + 1;
+      return "./images/jungle" + randomVal + ".jpg";
+    }
+
+    function displayJungleImg() {
+      var img = document.getElementById("image");
+      img.src = getJunglePicture();
+      img.onload = function() {
+        var nativeHeight = this.height;
+        var nativeWidth = this.width;
+        var maxDimension = Math.max(nativeHeight, nativeWidth);
+        if (maxDimension > maxImgDimension) {
+          if (nativeHeight > nativeWidth) {
+            img.height = maxImgDimension;
+            img.width = (nativeWidth / nativeHeight) * maxImgDimension;
+          } else {
+            img.width = maxImgDimension;
+            img.height = (nativeHeight / nativeWidth) * maxImgDimension;
+          }
+        }
+      }
+    }
+
+    function displayRandomImg() {
+      var imgWidth = (Math.floor(Math.random() * 3) * 100) + 300;
+      var imgHeight = (Math.floor(Math.random() * 3) * 100) + 300;
+      document.getElementById("image").src = "https://picsum.photos/" + imgWidth + "/" + imgHeight;
+      
+    }
+
+    function loadImage() {
+      if (Math.random() < jungleOdds) {
+        setTimeout(displayJungleImg, 1000);
+        document.getElementById("caption").innerHTML = "jungle";
+      } else {
+        displayRandomImg();
+        document.getElementById("caption").innerHTML = "not a jungle";
+      }
+    }
+
+    loadImage();
+  </script>
+</body>
+
+</html>

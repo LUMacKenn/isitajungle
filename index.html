@@ -17,8 +17,12 @@
     <div class="img-container">
       <img src="" alt="" id="image" width="" height=""/>
     </div>
-    <p id="caption">
-    </p>
+    <div class="caption-container">
+      <p id="caption"></p>
+      <button onclick=getNewImage()>
+        but is <i>this</i> a jungle?
+      </button>
+    </div>
   </div>
 
 
@@ -26,12 +30,36 @@
     const jungleOdds = 0.1;
     const maxImgDimension = 600;
 
+    const junglePhrases = [
+      "jungle",
+      "it's a jungle",
+      "hey look! a jungle"];
+
+    const noJunglePhrases = [
+      "not a jungle",
+      "that's no jungle",
+      "hmm. no jungle here.",
+      "does this look like a jungle to you?",
+      "i don't see a jungle",
+      "nope, no jungle"
+    ]
+
+    function getJunglePhrase() {
+      var randomVal = Math.floor(Math.random() * junglePhrases.length);
+      return junglePhrases[randomVal];
+    }
+
+    function getNoJunglePhrase() {
+      var randomVal = Math.floor(Math.random() * noJunglePhrases.length);
+      return noJunglePhrases[randomVal];
+    }
+
     function getJunglePicture() {
       var randomVal = Math.floor(Math.random() * 11) + 1;
       return "./images/jungle" + randomVal + ".jpg";
     }
 
-    function displayJungleImg() {
+    function displayJungleImage() {
       var img = document.getElementById("image");
       img.src = getJunglePicture();
       img.onload = function() {
@@ -50,24 +78,24 @@
       }
     }
 
-    function displayRandomImg() {
+    function displayRandomImage() {
       var imgWidth = (Math.floor(Math.random() * 3) * 100) + 300;
       var imgHeight = (Math.floor(Math.random() * 3) * 100) + 300;
-      document.getElementById("image").src = "https://picsum.photos/" + imgWidth + "/" + imgHeight;
-      
+      var currTime = new Date().getTime();
+      document.getElementById("image").src = "https://picsum.photos/" + imgWidth + "/" + imgHeight + "?nocache=" + currTime;
     }
 
-    function loadImage() {
+    function getNewImage() {
       if (Math.random() < jungleOdds) {
-        setTimeout(displayJungleImg, 1000);
-        document.getElementById("caption").innerHTML = "jungle";
+        setTimeout(displayJungleImage, 1000);
+        document.getElementById("caption").innerHTML = getJunglePhrase();
       } else {
-        displayRandomImg();
-        document.getElementById("caption").innerHTML = "not a jungle";
+        displayRandomImage();
+        document.getElementById("caption").innerHTML = getNoJunglePhrase();
       }
     }
 
-    loadImage();
+    getNewImage();
   </script>
 </body>
 
